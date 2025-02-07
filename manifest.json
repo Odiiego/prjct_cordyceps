@@ -1,0 +1,15 @@
+{
+  "name": "prjct_cordyceps",
+  "version": "1.0",
+  "manifest_version": 3,
+  "description": "Busque por respostas no Brainly",
+  "action": {
+    "default_icon": "icon.png",
+    "default_popup": "index.html"
+  },
+  "permissions": ["tabs", "scripting"],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "background.js"
+  }
+}
