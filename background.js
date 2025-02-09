@@ -1,8 +1,8 @@
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === 'searchBrainly') {
     searchBrainly(message.question)
-      .then((answer) => {
-        sendResponse({ answer });
+      .then((data) => {
+        sendResponse(data);
       })
       .catch((error) => {
         console.error('Erro na requisição:', error);
@@ -43,8 +43,40 @@ async function searchBrainly(question) {
     );
 
     const data = await response.json();
-    console.log(data);
-    return data;
+    const hasVerifiedAnswer =
+      data.results.filter(({ question }) => question.answer.verified).length >
+      0;
+    const bestRating = Math.max(
+      ...data.results.map(({ question }) => question.answer.rating),
+    );
+
+    const results = data.results
+      .filter(
+        ({ question }) =>
+          question.answer.verified === hasVerifiedAnswer &&
+          question.answer.rating === bestRating,
+      )
+      .sort(
+        (a, b) => b.question.answer.ratesCount - a.question.answer.ratesCount,
+      );
+
+    if (results.length === 0) {
+      return [
+        {
+          pergunta: question,
+          resposta: 'Nenhuma resposta encontrada',
+        },
+      ];
+    }
+
+    const formattedResult = results.map(({ question }) => {
+      return {
+        pergunta: question.content,
+        resposta: question.answer.content,
+      };
+    });
+
+    return formattedResult;
   } catch (error) {
     console.error('Erro ao buscar resposta:', error);
     return 'Erro ao buscar resposta.';
