@@ -8,7 +8,8 @@ document.getElementById('ask').addEventListener('click', async () => {
       chrome.runtime.sendMessage(
         { action: 'searchBrainly', question },
         (response) => {
-          alert('Resposta do Brainly: ' + response.answer);
+          console.clear();
+          console.log(response);
         },
       );
     },
