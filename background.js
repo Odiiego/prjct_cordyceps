@@ -2,7 +2,15 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === 'searchBrainly') {
     searchBrainly(message.question)
       .then((data) => {
-        sendResponse(data);
+        const resposta =
+          data.length > 0 ? data[0].resposta : 'Nenhuma resposta encontrada.';
+
+        chrome.runtime.sendMessage({
+          action: 'renderAnswer',
+          answer: resposta,
+        });
+
+        sendResponse({ answer: resposta });
       })
       .catch((error) => {
         console.error('Erro na requisição:', error);
@@ -59,15 +67,6 @@ async function searchBrainly(question) {
       .sort(
         (a, b) => b.question.answer.ratesCount - a.question.answer.ratesCount,
       );
-
-    if (results.length === 0) {
-      return [
-        {
-          pergunta: question,
-          resposta: 'Nenhuma resposta encontrada',
-        },
-      ];
-    }
 
     const formattedResult = results.map(({ question }) => {
       return {
