@@ -8,22 +8,18 @@
   height: 1rem;
 }
 
-/* width */
 ::-webkit-scrollbar {
   width: 10px;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
   background: #eefff5;
 }
 
-/* Handle */
 ::-webkit-scrollbar-thumb {
   background: #9affc9;
 }
 
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #78fdb7;
 }
@@ -93,9 +89,9 @@ body #result > div:nth-child(1)::after {
   position: absolute;
   font-weight: bold;
   text-align: end;
-  font-size: 15rem;
+  font-size: 7rem;
   z-index: -1;
-  bottom: -2.75rem;
+  bottom: -1.25rem;
   right: 0.75rem;
 }
 body #result > div:nth-child(2) {
