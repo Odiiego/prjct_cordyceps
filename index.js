@@ -12,7 +12,23 @@ document.getElementById('ask').addEventListener('click', async () => {
 
 chrome.runtime.onMessage.addListener((message) => {
   if (message.action === 'renderAnswer' && message.answer) {
-    const resultDiv = document.getElementById('result');
-    resultDiv.innerHTML = message.answer;
+    const result = document.getElementById('result');
+    result.innerHTML = '';
+
+    if (!message.answer.resposta) {
+      result.innerHTML = '<p>Nenhuma resposta escontrada.</p>';
+      return;
+    }
+
+    const question = document.createElement('div');
+    question.setAttribute('id', 'question');
+    question.innerHTML = message.answer.pergunta;
+
+    const answer = document.createElement('div');
+    question.setAttribute('id', 'answer');
+    answer.innerHTML = message.answer.resposta;
+
+    result.appendChild(question);
+    result.appendChild(answer);
   }
 });

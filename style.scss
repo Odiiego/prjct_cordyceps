@@ -8,12 +8,34 @@
   height: 1rem;
 }
 
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #eefff5;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #9affc9;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #78fdb7;
+}
+
 body {
   display: flex;
   align-items: center;
   flex-direction: column;
-  min-width: 22.5rem;
+  width: 22.5rem;
   font-size: 1.15rem;
+  background-color: #eefff5;
+  color: #002715;
 
   nav {
     display: flex;
@@ -22,7 +44,7 @@ body {
     border-top: 1px solid #14ae5c;
     border-bottom: 1px solid #14ae5c;
     width: 100%;
-    padding: 1rem;
+    padding: 1rem 0;
 
     #ask {
       display: flex;
@@ -34,9 +56,16 @@ body {
       font-weight: bold;
       color: #14ae5c;
       border: 1px solid #14ae5c;
+      background-color: #eefff5;
 
       &:hover {
         cursor: pointer;
+        background-color: #d8ffea;
+      }
+
+      &:active {
+        background-color: #36f291;
+        color: #eefff5;
       }
     }
   }
@@ -44,7 +73,57 @@ body {
   #result {
     display: flex;
     flex-direction: column;
-    padding: 1rem;
+    // padding: 1rem;
+
+    & > div {
+      padding: 1rem;
+      border-bottom: 1px solid #14ae5c;
+
+      &:nth-child(1) {
+        position: relative;
+        z-index: 10;
+
+        &::before {
+          content: 'Pergunta: ';
+          display: block;
+          font-weight: bolder;
+          text-transform: uppercase;
+          text-align: end;
+          font-size: 0.9rem;
+        }
+
+        &::after {
+          content: '?';
+          display: block;
+          color: #d8ffea;
+          position: absolute;
+          font-weight: bold;
+          text-align: end;
+          font-size: 15rem;
+          z-index: -1;
+          bottom: -2.75rem;
+          right: 0.75rem;
+        }
+      }
+      &:nth-child(2) {
+        position: relative;
+        z-index: 10;
+
+        &::before {
+          content: 'resposta: ';
+          display: block;
+          font-weight: bolder;
+          text-transform: uppercase;
+          text-align: end;
+          font-size: 0.9rem;
+        }
+      }
+
+      &:not(:last-child) {
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+      }
+    }
 
     ul,
     ol {
@@ -52,6 +131,7 @@ body {
     }
 
     .instruction-list {
+      padding: 1rem 0;
       li {
         &::marker {
           font-weight: bold;

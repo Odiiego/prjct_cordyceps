@@ -3,7 +3,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     searchBrainly(message.question)
       .then((data) => {
         const resposta =
-          data.length > 0 ? data[0].resposta : 'Nenhuma resposta encontrada.';
+          data.length > 0
+            ? { pergunta: data[0].pergunta, resposta: data[0].resposta }
+            : 'Nenhuma resposta encontrada.';
 
         chrome.runtime.sendMessage({
           action: 'renderAnswer',
